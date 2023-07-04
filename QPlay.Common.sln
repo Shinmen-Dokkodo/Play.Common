@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QPlay.Common", "QPlay.Common.csproj", "{843C42D9-7511-4444-BD68-219A74901C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QPlay.Common", "src\QPlay.Common\QPlay.Common.csproj", "{47254EE2-5392-49C5-9B7D-021CCA85487F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{843C42D9-7511-4444-BD68-219A74901C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{843C42D9-7511-4444-BD68-219A74901C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{843C42D9-7511-4444-BD68-219A74901C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{843C42D9-7511-4444-BD68-219A74901C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47254EE2-5392-49C5-9B7D-021CCA85487F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47254EE2-5392-49C5-9B7D-021CCA85487F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47254EE2-5392-49C5-9B7D-021CCA85487F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47254EE2-5392-49C5-9B7D-021CCA85487F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BEAE87A5-D297-4C6D-84C5-0ACF9F8F50FA}
+		SolutionGuid = {5E0535F8-D0AB-4990-86F1-E36CDD938C07}
 	EndGlobalSection
 EndGlobal
