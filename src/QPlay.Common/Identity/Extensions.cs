@@ -8,7 +8,8 @@ public static class Extensions
 {
     public static AuthenticationBuilder ConfigureAuthentication(this IServiceCollection services)
     {
-        return services.ConfigureOptions<ConfigureJwtBearerOptions>()
+        return services
+            .ConfigureOptions<ConfigureJwtBearerOptions>()
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
     }

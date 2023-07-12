@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace QPlay.Common.Repositories.Interfaces;
 
-public interface IRepository<T> where T : IEntity
+public interface IRepository<T>
+    where T : IEntity
 {
     Task<IReadOnlyCollection<T>> GetAllAsync();
     Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> filter);

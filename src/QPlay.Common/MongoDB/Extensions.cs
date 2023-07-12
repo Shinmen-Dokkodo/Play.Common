@@ -30,8 +30,12 @@ public static class Extensions
         services.AddSingleton(serviceProvider =>
         {
             IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
-            ServiceSettings serviceSettings = configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
-            MongoDBSettings mongoDbSettings = configuration.GetSection(nameof(MongoDBSettings)).Get<MongoDBSettings>();
+            ServiceSettings serviceSettings = configuration
+                .GetSection(nameof(ServiceSettings))
+                .Get<ServiceSettings>();
+            MongoDBSettings mongoDbSettings = configuration
+                .GetSection(nameof(MongoDBSettings))
+                .Get<MongoDBSettings>();
             MongoClient mongoClient = new(mongoDbSettings.ConnectionString);
             return mongoClient.GetDatabase(serviceSettings.ServiceName);
         });
@@ -46,7 +50,11 @@ public static class Extensions
     /// <param name="services">The IServiceCollection to add the repository to.</param>
     /// <param name="collectionName">The name of the collection in the MongoDB database.</param>
     /// <returns>The same service collection so that multiple calls can be chained.</returns>
-    public static IServiceCollection AddMongoRepository<T>(this IServiceCollection services, string collectionName) where T : IEntity
+    public static IServiceCollection AddMongoRepository<T>(
+        this IServiceCollection services,
+        string collectionName
+    )
+        where T : IEntity
     {
         services.AddSingleton<IRepository<T>>(serviceProvider =>
         {

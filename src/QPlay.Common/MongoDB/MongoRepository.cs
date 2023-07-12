@@ -11,7 +11,8 @@ namespace QPlay.Common.MongoDB;
 /// <summary>
 /// Repository implementation for MongoDB, for a generic type T where T is an entity.
 /// </summary>
-public class MongoRepository<T> : IRepository<T> where T : IEntity
+public class MongoRepository<T> : IRepository<T>
+    where T : IEntity
 {
     private readonly IMongoCollection<T> mongoCollection;
     private readonly FilterDefinitionBuilder<T> filterDefinitionBuilder = Builders<T>.Filter;
@@ -73,7 +74,8 @@ public class MongoRepository<T> : IRepository<T> where T : IEntity
     /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task CreateAsync(T entity)
     {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
 
         await mongoCollection.InsertOneAsync(entity);
     }
@@ -85,9 +87,13 @@ public class MongoRepository<T> : IRepository<T> where T : IEntity
     /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task UpdateAsync(T entity)
     {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
 
-        FilterDefinition<T> filterDefinition = filterDefinitionBuilder.Eq(existingEntity => existingEntity.Id, entity.Id);
+        FilterDefinition<T> filterDefinition = filterDefinitionBuilder.Eq(
+            existingEntity => existingEntity.Id,
+            entity.Id
+        );
         await mongoCollection.ReplaceOneAsync(filterDefinition, entity);
     }
 
