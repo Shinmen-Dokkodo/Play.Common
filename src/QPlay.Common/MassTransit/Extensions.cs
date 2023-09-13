@@ -1,13 +1,9 @@
-﻿using GreenPipes;
-using GreenPipes.Configurators;
+﻿using System;
+using System.Reflection;
 using MassTransit;
-using MassTransit.Definition;
-using MassTransit.ExtensionsDependencyInjectionIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QPlay.Common.Settings;
-using System;
-using System.Reflection;
 
 namespace QPlay.Common.MassTransit;
 
@@ -23,10 +19,8 @@ public static class Extensions
     /// <param name="services">The IServiceCollection to add the services to.</param>
     /// <param name="configureRetries">Optional action to configure retry policies.</param>
     /// <returns>The same service collection so that multiple calls can be chained.</returns>
-    public static IServiceCollection AddMassTransitWithRabbitMq(
-        this IServiceCollection services,
-        Action<IRetryConfigurator> configureRetries = null
-    )
+    public static IServiceCollection AddMassTransitWithRabbitMq(this IServiceCollection services, 
+        Action<IRetryConfigurator> configureRetries = null)
     {
         services.AddMassTransit(configure =>
         {
@@ -34,7 +28,6 @@ public static class Extensions
             configure.ConfigureRabbitMq(configureRetries);
         });
 
-        services.AddMassTransitHostedService();
         return services;
     }
 
@@ -43,28 +36,21 @@ public static class Extensions
     /// </summary>
     /// <param name="configure">The IServiceCollectionBusConfigurator to configure the services.</param>
     /// <param name="configureRetries">Optional action to configure retry policies.</param>
-    public static void ConfigureRabbitMq(
-        this IServiceCollectionBusConfigurator configure,
-        Action<IRetryConfigurator> configureRetries = null
-    )
+    public static void ConfigureRabbitMq(this IBusRegistrationConfigurator configure,
+        Action<IRetryConfigurator> configureRetries = null)
     {
         configure.UsingRabbitMq(
             (context, configurator) =>
             {
                 IConfiguration configuration = context.GetService<IConfiguration>();
-                ServiceSettings serviceSettings = configuration
-                    .GetSection(nameof(ServiceSettings))
+                ServiceSettings serviceSettings = configuration.GetSection(nameof(ServiceSettings))
                     .Get<ServiceSettings>();
-                RabbitMQSettings rabbitMQSettings = configuration
-                    .GetSection(nameof(RabbitMQSettings))
+                RabbitMQSettings rabbitMQSettings = configuration.GetSection(nameof(RabbitMQSettings))
                     .Get<RabbitMQSettings>();
                 configurator.Host(rabbitMQSettings.Host);
-                configurator.ConfigureEndpoints(
-                    context,
-                    new KebabCaseEndpointNameFormatter(serviceSettings.ServiceName, false)
-                );
-                configureRetries ??= (retryConfigurator) =>
-                    retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
+                configurator.ConfigureEndpoints(context,
+                    new KebabCaseEndpointNameFormatter(serviceSettings.ServiceName, false));
+                configureRetries ??= (retryConfigurator) => retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
                 configurator.UseMessageRetry(configureRetries);
             }
         );
